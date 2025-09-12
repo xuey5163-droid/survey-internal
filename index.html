@@ -1894,7 +1894,7 @@
             input.name = expectedName;
             input.min = 0;
             input.placeholder = "Free text";
-            input.required = true;
+            //input.required = true;
             input.value = val;
           } else {
             const prevText = td.textContent.trim();
@@ -1904,7 +1904,7 @@
             input.name = expectedName;
             input.min = 0;
             input.placeholder = "Free text";
-            input.required = true;
+            //input.required = true;
             if (prevText !== "") {
               const num = parseFloat(prevText);
               if (!Number.isNaN(num)) input.value = num;
@@ -2290,4 +2290,5 @@
 </body>
 
 </html>
+
 
