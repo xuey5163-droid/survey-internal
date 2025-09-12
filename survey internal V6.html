@@ -1,0 +1,2292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IVL Voice of the Customer Survey</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      /* Ensure body takes full viewport height */
+    }
+
+    /* Ensure container fills the content height or viewport */
+    body {
+      background-color: #0f033a;
+      /* Match container background */
+      min-height: 100vh;
+      /* Minimum height of the viewport */
+    }
+
+    .imagecontainer {
+      max-width: 1000px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px 0 0 0;
+      box-sizing: border-box;
+      background-color: #ffffff;
+      /* 添加背景色以便可视化 */
+      min-height: 100px;
+      /* 确保容器有最小高度 */
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      color: white;
+      /* border-bottom: 2px solid #333; */
+    }
+
+    h1,
+    h2 {
+      color: #333;
+      font-weight: bold;
+    }
+
+    .question {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #000080;
+    }
+
+    .prologue {
+      max-width: 1000px;
+      margin: 0 auto;
+      /* Center the prologue */
+      padding: 20px;
+      box-sizing: border-box;
+      background-color: #f5f24a;
+      width: 100%;
+      /* Fill the container width */
+    }
+
+    .container {
+      background-color: #ffffff;
+      max-width: 1000px;
+      width: 100%;
+      /* 添加宽度设置，与prologue保持一致 */
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      overflow: visible;
+      box-sizing: border-box;
+      /* 确保padding包含在宽度内 */
+    }
+
+    .questionsubtitle {
+      font-style: italic;
+      color: #808080;
+      /* 灰色 */
+      font-size: 0.9em;
+      /* 比正常小一点 */
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      table-layout: fixed;
+      background-color: white;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      text-align: left;
+      padding: 8px;
+      background-color: white;
+    }
+
+    /* 为来源表格设置特定列宽 */
+    #sourceTable th:nth-child(1),
+    #sourceTable td:nth-child(1) {
+      width: 40%;
+    }
+
+    #sourceTable td:first-child {
+      background-color: white;
+    }
+
+    #sourceTable th:nth-child(2),
+    #sourceTable td:nth-child(2) {
+      width: 30%;
+    }
+
+    #sourceTable th:nth-child(3),
+    #sourceTable td:nth-child(3) {
+      width: 30%;
+    }
+
+    /* 其他表格样式保持不变 */
+    #criteriaTable th,
+    #criteriaTable td,
+    #sourceTable th,
+    #sourceTable td,
+    #rankingTable th,
+    #rankingTable td,
+    #leadTimeTable th,
+    #leadTimeTable td,
+    #performanceTable th,
+    #performanceTable td,
+    #comparisonTable th,
+    #comparisonTable td,
+    #claimsTable th,
+    #claimsTable td,
+    #claimsManagementTable th,
+    #claimsManagementTable td,
+    #trendsTable th,
+    #trendsTable td,
+    #growthTable th,
+    #growthTable td {
+      padding: 0;
+      background-color: white;
+    }
+
+
+    #criteriaTable th,
+    #rankingTable th {
+      font-size: 12px;
+      padding: 5px 3px;
+      white-space: normal;
+      line-height: 1.2;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      padding: 5px;
+      margin: 0;
+      background-color: white;
+      border: 1px solid rgb(196, 190, 190);
+      box-sizing: border-box;
+    }
+
+    select {
+      width: 80px;
+      padding: 5px;
+      margin: 0;
+      border: none;
+      background-color: white;
+      box-sizing: border-box;
+    }
+
+    .criteria-select {
+      width: 210px;
+      padding: 5px;
+      margin: 0;
+      border: none;
+      background-color: white;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .delete-btn {
+      padding: 5px 10px;
+      background-color: #dc3545;
+      font-size: 12px;
+    }
+
+    .delete-btn:hover {
+      background-color: #c82333;
+    }
+
+    .add-row {
+      margin-bottom: 10px;
+    }
+
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .radio-group label {
+      margin-bottom: 5px;
+    }
+
+    .customerContainer {
+      display: flex;
+      justify-content: flex-end;
+      /* 将内容推到右侧 */
+      align-items: flex-start;
+    }
+
+    .logo {
+      max-width: 200px;
+      height: auto;
+      display: inline-block;
+      margin-left: auto;
+      /* 让它往右推 */
+      margin-right: 0;
+    }
+
+    .customer-info {
+      display: flex;
+      align-items: center;
+      background: white;
+      padding: 12px 18px;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e0e0e0;
+      /* position: relative;  不再必需用于下拉定位 */
+    }
+
+    .customer-info span {
+      margin-right: 12px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+      /* 或者 flex 子项，按需调整 */
+    }
+
+    .dropdown input {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      min-width: 180px;
+      /* 可保留 */
+      background-color: #fff;
+      display: block;
+      box-sizing: border-box;
+    }
+
+    .dropdown-list {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      width: 100%;
+      box-sizing: border-box;
+      max-height: 150px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      background: #fff;
+      display: none;
+      z-index: 1000;
+    }
+
+    .dropdown-list div {
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    .dropdown-list div:hover {
+      background: #f0f0f0;
+    }
+
+    /* 遮罩层 */
+    #messageModal {
+      display: none;
+      /* 默认隐藏 */
+      position: fixed;
+      inset: 0;
+      /* 顶部、右、下、左都覆盖 */
+      background: rgba(0, 0, 0, 0.5);
+      /* 半透明背景 */
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    /* 弹窗内容 */
+    #messageModal .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 600px;
+      text-align: left;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    #messageModal h2 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+
+    #closeModal {
+      margin-top: 20px;
+      padding: 8px 16px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #productsTable {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    #productsTable th:nth-child(1),
+    #productsTable td:nth-child(1) {
+      width: 35% !important;
+      box-sizing: border-box;
+    }
+
+    #productsTable .dropdown {
+      width: 100%;
+      display: block;
+      box-sizing: border-box;
+    }
+
+    .product-input {
+      display: block;
+      width: 100% !important;
+      padding: 8px !important;
+      margin: 0;
+      border: 1px solid #ccc !important;
+      border-radius: 4px;
+      font-size: 0.9em;
+      box-sizing: border-box;
+      background-color: #fff;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .product-input:focus {
+      border-color: #66afe9;
+      box-shadow: 0 0 4px rgba(102, 175, 233, 0.4);
+    }
+
+    .product-dropdown-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      max-height: 180px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #fff;
+      z-index: 999;
+      display: none;
+      font-size: 0.9em;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      box-sizing: border-box;
+    }
+
+    #loadingOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      color: #333;
+      z-index: 9999;
+    }
+
+    .loading-box {
+      background: #fff;
+      padding: 20px 40px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="loadingOverlay">
+    <div class="loading-box">
+      🔄 Data is loading, just a moment …
+    </div>
+  </div>
+  <form id="surveyForm">
+    <div class="imagecontainer">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/INDORAMA.jpg" alt="Indorama Logo" class="logo" />
+    </div>
+    <div class="prologue">
+      <h1>
+        Voice of the Customer Survey for Indorama Ventures' Fiber Division
+        Customers
+      </h1>
+      <p>
+        This "Voice of the Customer" survey aims to better understand the
+        needs of IVL's customers and identify opportunities for growth. This
+        feedback will help you improve products, services and support to
+        enable your customers to be more successful.
+      </p>
+      <p>
+        Please take a few minutes to complete this questionnaire. Your answers
+        are valuable to IVL.
+      </p>
+    </div>
+    <div class="container">
+      <div class="customerContainer">
+        <div class="customer-info">
+          <span>Customer</span>
+
+          <!-- 新增 wrapper：dropdown -->
+          <div class="dropdown">
+            <input type="text" id="searchInput" name="customer" placeholder="Please input customer name ..." required />
+            <div class="dropdown-list" id="dropdownList"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Section 1: General Information -->
+      <div class="section">
+        <h2>Section 1: General Information</h2>
+        <p class="question">
+          1. 1. How many years has this client been a client of Indorama
+          Ventures?
+        </p>
+        <div class="radio-group">
+          <label><input type="radio" name="client_years" value="Less than 1 year" required />
+            Less than 1 year</label>
+          <label><input type="radio" name="client_years" value="1-3 years" /> 1-3
+            years</label>
+          <label><input type="radio" name="client_years" value="3-5 years" /> 3-5
+            years</label>
+          <label><input type="radio" name="client_years" value="More than 5 years" />
+            More than 5 years</label>
+        </div>
+
+        <p class="question">
+          2. 2. Which regions do they cover? <br />
+          <span class="questionsubtitle">(Please specify countries and zones)</span>
+        </p>
+        <textarea name="regions" rows="4" placeholder="Free text" required></textarea>
+
+        <p class="question">
+          3. What products do they buy? <br />
+          <span class="questionsubtitle">(Please specify purchase percentages in value)</span>
+        </p>
+        <table id="productsTable">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Percentage of Purchases</th>
+              <th>Product Family</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="dropdown">
+                  <input type="text" class="product-input" name="product_name" placeholder="Please input product ..."
+                    required />
+                  <div class="product-dropdown-list"></div>
+                </div>
+              </td>
+              <td>
+                <input class="percentageInput" type="text" name="product_percentage" min="0" max="100" placeholder="%"
+                  required />
+              </td>
+              <td>
+                <input type="text" name="product_family" placeholder="Free text" required />
+              </td>
+              <td>
+                <button type="button" class="delete-btn" onclick="deleteProductRow(this)" disabled>
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button type="button" class="add-row" onclick="addProductRow()">
+          Add Product
+        </button>
+
+        <p class="question">
+          4. Where do they buy their products from? <br />
+          <span class="questionsubtitle">(Please specify purchase percentages in value)</span>
+        </p>
+        <table id="sourceTable">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>% Purchases Sourced Locally</th>
+              <th>% Purchases Sourced in Asia</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <!-- Section 2: Supplier Selection Criteria -->
+      <div class="section">
+        <h2>Section 2: Supplier Selection Criteria</h2>
+        <h3>2.1 Most Important Criteria</h3>
+        <p class="question">
+          5. For the products they buy from IVL, what are the top 3 criteria
+          they consider when selecting IVL?<br />
+          <span class="questionsubtitle">(Please rate 1, 2, and 3 the top 3 criteria for each
+            product)</span>
+        </p>
+
+        <table id="criteriaTable">
+          <thead>
+            <tr>
+              <th>Product</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <p>
+          Other criteria:
+          <input type="text" id="other_criteria" name="other_criteria" placeholder="Free text" />
+        </p>
+
+        <h3>2.2 IVL Ranking According to These Criteria</h3>
+        <p class="question">
+          6. For each product, how do you rate IVL on the top 3 criteria?
+          <br />
+          <span class="questionsubtitle">(Please rate IVL on a scale from 1 (Very good) to 5 (Needs
+            improvement))</span>
+        </p>
+        <!-- <p>
+          Other criteria:
+          <input type="text" id="other_ranking" placeholder="Free text" />
+        </p> -->
+        <table id="rankingTable">
+          <thead>
+            <tr>
+              <th>Product</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <!-- Section 3: Order Processing -->
+      <div class="section">
+        <h2>Section 3: Order Processing</h2>
+        <h3>3.1 Their Expectations</h3>
+        <p class="question">
+          7. Upon placing an order to IVL, what order fulfilment lead time are
+          they considering?<br />
+          <span class="questionsubtitle">(Please select one answer per product)</span>
+        </p>
+
+        <table id="leadTimeTable">
+          <thead>
+            <tr>
+              <th>Product</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <p>
+          Other lead time:
+          <input type="text" id="other_lead_time" placeholder="Free text" />
+        </p>
+
+        <p class="question">
+          8. Is this order fulfillment lead time in line with the market
+          standards?
+        </p>
+        <div class="radio-group">
+          <label><input type="radio" name="lead_time_standards" value="Yes" required />
+            Yes</label>
+          <label><input type="radio" name="lead_time_standards" value="No" />
+            No</label>
+        </div>
+
+        <p class="question">
+          9. When they place an order, what is the response time they expect
+          before receiving our confirmation?
+        </p>
+        <div class="radio-group">
+          <label><input type="radio" name="response_time" value="Less than 24 hours" required />
+            Less than 24 hours</label>
+          <label><input type="radio" name="response_time" value="Less than 48 hours" />
+            Less than 48 hours</label>
+          <label><input type="radio" name="response_time" value="Other" /> Other:
+            <input type="text" name="response_time_other" placeholder="Free text" /></label>
+        </div>
+
+        <p class="question">
+          10. Is this response time in line with their market standards?
+        </p>
+        <div class="radio-group">
+          <label><input type="radio" name="response_time_standards" value="Yes" required />
+            Yes</label>
+          <label><input type="radio" name="response_time_standards" value="No" />
+            No</label>
+        </div>
+
+        <h3>3.2 IVL Performance</h3>
+        <p class="question">
+          11. For the below topics, how do you rate IVL?<br />
+          <span class="questionsubtitle">(Please rate IVL on a scale from 1 (Very good) to 5 (Needs
+            improvement))</span>
+        </p>
+        <table id="performanceTable">
+          <thead>
+            <tr>
+              <th>Topic</th>
+              <th>IVL Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Order response time</td>
+              <td>
+                <select name="perf_order_response" required>
+                  <option value="">Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Order fulfilment lead time</td>
+              <td>
+                <select name="perf_fulfilment" required>
+                  <option value="">Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>On-time delivery performance</td>
+              <td>
+                <select name="perf_delivery" required>
+                  <option value="">Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Flexibility</td>
+              <td>
+                <select name="perf_flexibility" required>
+                  <option value="">Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Response time</td>
+              <td>
+                <select name="perf_response" required>
+                  <option value="">Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Communication</td>
+              <td>
+                <select name="perf_communication" required>
+                  <option value="">Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Technical support / troubleshooting</td>
+              <td>
+                <select name="perf_technical" required>
+                  <option value="">Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Product development</td>
+              <td>
+                <select name="perf_development" required>
+                  <option value="">Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p class="question">
+          12. For the below topics, how does IVL compare to your best
+          competitors?<br />
+          <span class="questionsubtitle">(Please rate IVL versus your best supplier on a scale from 1 (Is
+            world leader) to 5 (Is the worst))</span>
+        </p>
+        <table id="comparisonTable">
+          <thead>
+            <tr>
+              <th>Topic</th>
+              <th>Comparison Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Order response time</td>
+              <td>
+                <select name="comp_order_response" required>
+                  <option value="">Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Order fulfilment lead time</td>
+              <td>
+                <select name="comp_fulfilment" required>
+                  <option value="">Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>On-time delivery performance</td>
+              <td>
+                <select name="comp_delivery" required>
+                  <option value="">Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Flexibility</td>
+              <td>
+                <select name="comp_flexibility" required>
+                  <option value="">Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Response time</td>
+              <td>
+                <select name="comp_response" required>
+                  <option value="">Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Communication</td>
+              <td>
+                <select name="comp_communication" required>
+                  <option value="">Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Technical support / troubleshooting</td>
+              <td>
+                <select name="comp_technical" required>
+                  <option value="">Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Product development</td>
+              <td>
+                <select name="comp_development" required>
+                  <option value="">Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section 4: Claims -->
+      <div class="section">
+        <h2>Section 4: Claims</h2>
+        <p class="question">
+          13. In the last 18 months, how many claims have they raised to
+          IVL?<br />
+          <span class="questionsubtitle">(Please provide one number per potential cause)</span>
+        </p>
+
+        <table id="claimsTable">
+          <thead>
+            <tr>
+              <th>Product</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <p>
+          Other:
+          <input type="text" id="other_claims" name="other_claim_name" placeholder="Free text" />
+        </p>
+
+        <p class="question">
+          14. How would you rate the management of these claims by IVL?<br />
+          <span class="questionsubtitle">(Please rate IVL on a scale from 1 (Very good) to 5 (Needs
+            improvement))</span>
+        </p>
+        <!-- <p>
+          Other:
+          <input
+            type="text"
+            id="other_claims_management"
+            placeholder="Free text"
+          />
+        </p> -->
+        <table id="claimsManagementTable">
+          <thead>
+            <tr>
+              <th>Product</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <!-- Section 5: Future Opportunities -->
+      <div class="section">
+        <h2>Section 5: Future Opportunities</h2>
+        <p class="question">
+          15. What emerging trends do you see in their market(s) impacting
+          growth? (e.g., sustainability, environmental impact, etc.)
+        </p>
+        <table id="trendsTable">
+          <thead>
+            <tr>
+              <th>Type of Product</th>
+              <th>Trends</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <p class="question">
+          16. What growth do you anticipate in their market(s)?
+        </p>
+        <table id="growthTable">
+          <thead>
+            <tr>
+              <th>Type of Product</th>
+              <th>Change in Percent</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <p class="question">
+          17. What new services do you think IVL should develop to meet their
+          future requirements?
+        </p>
+        <textarea name="new_services" rows="4" placeholder="Free text" required></textarea>
+      </div>
+
+      <button type="submit">Submit Survey</button>
+    </div>
+  </form>
+
+  <div id="messageModal">
+    <div class="modal-content">
+      <h2>Survey submitted successfully!</h2>
+      <p>
+        Please send the code <span id="customerKey"></span> to the customer
+        for external survey.
+      </p>
+      <p>
+        Thank you for taking the time to complete this survey.<br />
+        Your feedback is essential in helping IVL strengthen its services and
+        stimulate mutual growth.
+      </p>
+      <p>
+        We appreciate your continued support.<br />Sincerely,<br />The B2G
+        team
+      </p>
+      <button id="closeModal">OK</button>
+    </div>
+  </div>
+
+  <script>
+
+
+    function initPercentageInput(input) {
+      if (!input) return;
+      input.dataset.rawValue = parseFloat(input.value) / 100 || 0;
+
+      input.addEventListener("input", (e) => {
+        let selStart = input.selectionStart;
+        let selEnd = input.selectionEnd;
+
+        // 只保留数字和小数点
+        let cleaned = input.value.replace(/[^\d.]/g, "");
+        let num = parseFloat(cleaned) / 100;
+        if (isNaN(num)) num = 0;
+        if (num > 1) num = 1;
+        if (num < 0) num = 0;
+        input.dataset.rawValue = num;
+
+        input.value = cleaned;
+        input.setSelectionRange(selStart, selEnd);
+      });
+
+      input.addEventListener("blur", () => {
+        let val = parseFloat(input.dataset.rawValue) || 0;
+        input.value = (val * 100).toFixed(2) + "%";
+      });
+
+      input.addEventListener("focus", () => {
+        let val = parseFloat(input.dataset.rawValue) || 0;
+        input.value = (val * 100).toFixed(2);
+      });
+
+      // 监听 JS 设置 value
+      const observer = new MutationObserver(() => {
+        let num = parseFloat(input.value.replace(/[^\d.]/g, "")) / 100;
+        if (isNaN(num)) num = 0;
+        input.dataset.rawValue = num;
+        input.value = (num * 100).toFixed(2) + "%";
+      });
+      observer.observe(input, { attributes: true, attributeFilter: ["value"] });
+    }
+
+    const AIRTABLE_API_KEY =
+      "patrjtULk7D6YYpsd.540b46cea31b993558c6a81c9683c59fd9346af67ed8f2b248adbfa21113bed7";
+    const BASE_ID = "app3igG0vKL8DpLB8";
+    const TABLE_NAME = "tbl4fSGdosjDLsgaB";
+    const table_product_name = "tblbw322xWTPahpM1";
+    const COMA_TABLE_NAME = "COMA";
+    let customerOptions = [];
+    let productOptions = [];
+    let customerProducts = []; // Store products for the selected customer
+
+    async function fetchAllRecords(baseId, tableName, apiKey, filter = "") {
+      let allRecords = [];
+      let offset = null;
+
+      do {
+        const url = new URL(
+          `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(
+            tableName
+          )}`
+        );
+        if (offset) url.searchParams.set("offset", offset);
+        if (filter) url.searchParams.set("filterByFormula", filter);
+
+        const res = await fetch(url, {
+          headers: { Authorization: `Bearer ${apiKey}` },
+        });
+        const data = await res.json();
+
+        if (data.records) {
+          allRecords = allRecords.concat(data.records);
+        }
+
+        offset = data.offset; // 下一页的 offset
+      } while (offset);
+
+      return allRecords;
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      const loadingOverlay = document.getElementById("loadingOverlay");
+      try {
+        loadingOverlay.style.display = "flex";
+        // 通用函数：获取 Airtable 全部记录（自动处理分页）
+
+        // Fetch Customer data
+        const customerRecords = await fetchAllRecords(
+          BASE_ID,
+          TABLE_NAME,
+          AIRTABLE_API_KEY
+        );
+        customerOptions = Array.from(
+          new Set(
+            customerRecords
+              .map((r) => r.fields.Customer)
+              .filter((v) => v != null)
+              .flatMap((v) => (Array.isArray(v) ? v : [v]))
+              .map((v) => String(v).trim())
+              .filter(Boolean)
+          )
+        );
+
+        // Fetch Product data
+        const productRecords = await fetchAllRecords(
+          BASE_ID,
+          table_product_name,
+          AIRTABLE_API_KEY
+        );
+        productOptions = Array.from(
+          new Set(
+            productRecords
+              .map((r) => r.fields.Name)
+              .filter((v) => v != null)
+              .flatMap((v) => (Array.isArray(v) ? v : [v]))
+              .map((v) => String(v).trim())
+              .filter(Boolean)
+          )
+        );
+
+        // Initialize Customer dropdown
+        const customerInput = document.getElementById("searchInput");
+        const customerList = document.getElementById("dropdownList");
+        initDropdown(customerInput, customerList, () => customerOptions);
+
+        // Add event listener for customer selection
+        customerInput.addEventListener("input", async () => {
+          const selectedCustomer = customerInput.value.trim();
+          if (
+            selectedCustomer &&
+            customerOptions.includes(selectedCustomer)
+          ) {
+            console.log(selectedCustomer);
+            await fetchCustomerProducts(selectedCustomer);
+            updateProductsTable();
+            updateDynamicTables();
+          }
+        });
+
+        // Initialize first Product dropdown
+        const firstProductInput = document.querySelector(".product-input");
+        const firstProductList = document.querySelector(
+          ".product-dropdown-list"
+        );
+        if (firstProductInput && firstProductList) {
+          initDropdown(firstProductInput, firstProductList, () =>
+            customerProducts.map((p) => p.product_description)
+          );
+        }
+      } catch (err) {
+        console.error("获取 Airtable 数据失败:", err);
+      } finally {
+        // 隐藏加载提示
+        loadingOverlay.style.display = "none";
+      }
+
+      document.querySelectorAll(".percentageInput").forEach(initPercentageInput);
+
+    });
+
+    // Fetch products for a specific customer from COMA table
+    async function fetchCustomerProducts(customerName) {
+      try {
+        // const filter = `FIND("${encodeURIComponent(
+        //   customerName
+        // )}", {customer_name})`;
+        const filter = `FIND("${customerName}", {customer_name})`;
+        const records = await fetchAllRecords(
+          BASE_ID,
+          COMA_TABLE_NAME,
+          AIRTABLE_API_KEY,
+          filter
+        );
+        customerProducts = records
+          .map((r) => ({
+            product_description: r.fields.product_description || "",
+            product_family: r.fields.product_family || "",
+            percentage_of_purchase: r.fields.percentage_of_purchase || 0,
+          }))
+          .filter((p) => p.product_description);
+      } catch (err) {
+        console.error("Failed to fetch customer products:", err);
+        customerProducts = [];
+      }
+    }
+
+    // Update productsTable with fetched customer products
+    function updateProductsTable() {
+      const tbody = document.querySelector("#productsTable tbody");
+      tbody.innerHTML = ""; // Clear existing rows
+
+      if (customerProducts.length === 0) {
+        // Add a default empty row if no products
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>
+              <div class="dropdown">
+                <input type="text" class="product-input" name="product_name" placeholder="Please input product ..." required />
+                <div class="product-dropdown-list"></div>
+              </div>
+            </td>
+            <td><input class="percentageInput" type="text" name="product_percentage" min="0" max="100" placeholder="%" required></td>
+            <td><input type="text" name="product_family" placeholder="Free text" required></td>
+            <td><button type="button" class="delete-btn" onclick="deleteProductRow(this)" disabled>Delete</button></td>
+          `;
+        row.querySelectorAll(".percentageInput").forEach(initPercentageInput);
+        tbody.appendChild(row);
+        // Initialize dropdown for the empty row
+        const input = row.querySelector(".product-input");
+        const list = row.querySelector(".product-dropdown-list");
+        initDropdown(input, list, () =>
+          customerProducts.map((p) => p.product_description)
+        );
+      } else {
+        // Populate rows with customer products
+        customerProducts.forEach((product, index) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+              <td>
+                <div class="dropdown">
+                  <input type="text" class="product-input" name="product_name" value="${product.product_description
+            }" required />
+                  <div class="product-dropdown-list"></div>
+                </div>
+              </td>
+              <td><input class="percentageInput" type="text" name="product_percentage" min="0" max="100" value="${(product.percentage_of_purchase * 100).toFixed(2) + "%"
+            }" placeholder="%" required></td>
+              <td><input type="text" name="product_family" value="${product.product_family
+            }" placeholder="Free text" required></td>
+              <td><button type="button" class="delete-btn" onclick="deleteProductRow(this)" ${index === 0 && customerProducts.length === 1 ? "disabled" : ""
+            }>Delete</button></td>
+            `;
+          row.querySelectorAll(".percentageInput").forEach(initPercentageInput);
+          tbody.appendChild(row);
+          // Initialize dropdown for the row
+          const input = row.querySelector(".product-input");
+          const list = row.querySelector(".product-dropdown-list");
+          initDropdown(input, list, () =>
+            customerProducts.map((p) => p.product_description)
+          );
+        });
+      }
+    }
+
+    /**
+     * 通用且健壮的 initDropdown
+     * optionsOrGetter 可以是数组，也可以是 () => array （推荐）
+     */
+    function initDropdown(input, listEl, optionsOrGetter) {
+      if (!input || !listEl) return;
+
+      const getOptions =
+        typeof optionsOrGetter === "function"
+          ? optionsOrGetter
+          : () => optionsOrGetter || [];
+
+      function renderList(filter = "") {
+        const f = String(filter || "").toLowerCase();
+        listEl.innerHTML = "";
+
+        // 确保每个 item 都是字符串再比较
+        const filtered = getOptions()
+          .filter((item) => item != null)
+          .map((item) => String(item))
+          .filter((str) => str.toLowerCase().includes(f));
+
+        if (filtered.length === 0) {
+          listEl.style.display = "none";
+          return;
+        }
+
+        filtered.forEach((item) => {
+          const div = document.createElement("div");
+          div.textContent = item;
+          div.addEventListener("mousedown", (e) => {
+            e.preventDefault(); // 避免 blur 导致消失
+            input.value = item;
+            listEl.style.display = "none";
+            // 触发 input 事件以调用 updateDynamicTables
+            const inputEvent = new Event("input", { bubbles: true });
+            input.dispatchEvent(inputEvent);
+          });
+          listEl.appendChild(div);
+        });
+        listEl.style.display = "block";
+      }
+
+      input.addEventListener("input", (e) => renderList(e.target.value));
+      input.addEventListener("focus", () => renderList(input.value));
+      input.addEventListener("blur", () =>
+        setTimeout(() => (listEl.style.display = "none"), 150)
+      );
+    }
+
+    let products = [];
+    let existingValue = {};
+    const topCritList = ["Top 1", "Top 2", "Top 3"];
+    const criteriaList = [
+      "Short delivery lead-time",
+      "Low cost",
+      "High product performance",
+      "High product availability",
+      "High delivery performance",
+      "End-to-end visibility of order fulfilment",
+      "Proactive and constant communication",
+      "Responsive customer support",
+      "Quick adaptability to customer's changes",
+      "Other",
+    ];
+
+    const leadTimeList = [
+      "Less than 2 weeks",
+      "2 to 4 weeks",
+      "4 to 6 weeks",
+      "6 to 8 weeks",
+      "8 to 10 weeks",
+      "More than 10 weeks",
+    ];
+
+    const claimsTopics = [
+      "Quality",
+      "Processability",
+      "Functional (strength, fluid management)",
+      "On time delivery, short shipping",
+      "Other",
+    ];
+
+    function addProductRow() {
+      const tbody = document.querySelector("#productsTable tbody");
+      const row = document.createElement("tr");
+      row.innerHTML = `
+          <td>
+            <div class="dropdown">
+              <input type="text" class="product-input" name="product_name" placeholder="Please input product ..." required />
+              <div class="product-dropdown-list"></div>
+            </div>
+          </td>
+          <td><input class="percentageInput" type="text" name="product_percentage" min="0" max="100" placeholder="%" required></td>
+          <td><input type="text" name="product_family" placeholder="Free text" required></td>
+          <td><button type="button" class="delete-btn" onclick="deleteProductRow(this)">Delete</button></td>
+        `;
+      row.querySelectorAll(".percentageInput").forEach(initPercentageInput);
+      tbody.appendChild(row);
+
+      // Initialize new row's dropdown
+      const input = row.querySelector(".product-input");
+      const list = row.querySelector(".product-dropdown-list");
+      initDropdown(input, list, () =>
+        customerProducts.map((p) => p.product_description)
+      );
+
+      // Enable delete buttons if multiple rows
+      const rows = document.querySelectorAll("#productsTable tbody tr");
+      if (rows.length > 1) {
+        rows.forEach((row) => {
+          row.querySelector(".delete-btn").disabled = false;
+        });
+      }
+
+      updateDynamicTables();
+    }
+
+    function deleteProductRow(button) {
+      const row = button.parentElement.parentElement;
+      row.remove();
+
+      // If only one row remains, disable its delete button
+      const rows = document.querySelectorAll("#productsTable tbody tr");
+      if (rows.length === 1) {
+        rows[0].querySelector(".delete-btn").disabled = true;
+      }
+
+      updateDynamicTables();
+    }
+
+    function getOtherValue(id) {
+      const input = document.getElementById(id);
+      return input ? input.value.trim() : "";
+    }
+
+    function updateDynamicTables() {
+      products = Array.from(
+        document.querySelectorAll("#productsTable tbody tr")
+      )
+        .map((row) => {
+          const nameInput = row.querySelector('input[name="product_name"]');
+          const percentageInput = row.querySelector(
+            'input[name="product_percentage"]'
+          );
+          const familyInput = row.querySelector(
+            'input[name="product_family"]'
+          );
+          return {
+            name: nameInput.value.trim(),
+            percentage: percentageInput.value,
+            family: familyInput.value.trim(),
+          };
+        })
+        .filter((p) => p.name);
+
+      // Update all related tables
+      updateSourceTable();
+      updateCriteriaTable();
+      updateRankingTable();
+      updateLeadTimeTable();
+      updateClaimsTable();
+      updateTrendsTable();
+      updateGrowthTable();
+    }
+
+    function updateSourceTable() {
+      const sourceTbody = document.querySelector("#sourceTable tbody");
+      // Remove rows for products that no longer exist
+      Array.from(sourceTbody.rows).forEach((row) => {
+        const productName = row.cells[0].textContent.trim();
+        if (!products.some((p) => p.name === productName)) {
+          row.remove();
+        }
+      });
+      // Current products in tbody
+      const existingProducts = Array.from(sourceTbody.rows).map((row) =>
+        row.cells[0].textContent.trim()
+      );
+
+      // Add new products
+      products.forEach((product) => {
+        if (!existingProducts.includes(product.name)) {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+              <td>${product.name}</td>
+              <td><input class="percentageInput" type="text" name="source_local|${product.name}" min="0" max="100" placeholder="%" required></td>
+              <td><input class="percentageInput" type="text" name="source_asia|${product.name}" min="0" max="100" placeholder="%" required></td>
+            `;
+          row.querySelectorAll(".percentageInput").forEach(initPercentageInput);
+          sourceTbody.appendChild(row);
+        }
+      });
+    }
+
+    function updateCriteriaTable() {
+      const criteriaThead = document.querySelector("#criteriaTable thead tr");
+      criteriaThead.innerHTML = "<th>Product</th>";
+      topCritList.forEach((crit) => {
+        const th = document.createElement("th");
+        th.textContent = crit;
+        criteriaThead.appendChild(th);
+      });
+
+      const otherCriteria = getOtherValue("other_criteria");
+
+      const criteriaTbody = document.querySelector("#criteriaTable tbody");
+
+      // Remove rows for non-existent products
+      Array.from(criteriaTbody.rows).forEach((row) => {
+        const productName = row.cells[0].textContent.trim();
+        if (!products.some((p) => p.name === productName)) {
+          row.remove();
+        }
+      });
+
+      // Current products in tbody
+      const existingProducts = Array.from(criteriaTbody.rows).map((row) =>
+        row.cells[0].textContent.trim()
+      );
+
+      // Add rows for new products
+      products.forEach((product, productIndex) => {
+        if (!existingProducts.includes(product.name)) {
+          const row = document.createElement("tr");
+          const productTd = document.createElement("td");
+          productTd.textContent = product.name;
+          row.appendChild(productTd);
+
+          topCritList.forEach((crit, critIndex) => {
+            const td = document.createElement("td");
+            const select = document.createElement("select");
+            select.name = `criteria_${crit.replace(/\W+/g, "_")}|${product.name
+              }`;
+            select.required = true;
+            select.classList.add("criteria-select");
+
+            const defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.textContent = "Select";
+            select.appendChild(defaultOption);
+
+            criteriaList.forEach((c) => {
+              if (c !== "Other" || otherCriteria) {
+                const option = document.createElement("option");
+                option.value = c === "Other" ? otherCriteria || "Other" : c;
+                option.textContent = option.value;
+                select.appendChild(option);
+              }
+            });
+
+            select.addEventListener("change", function () {
+              const selectedValue = this.value;
+              const currentRow = this.parentElement.parentElement;
+              const rowIndex = currentRow.rowIndex;
+              const productName = currentRow.cells[0].textContent.trim();
+              const initialSelectIndex = Array.from(
+                this.parentElement.parentElement.cells
+              ).indexOf(this.parentElement);
+
+              if (
+                Object.values(existingValue).includes(
+                  productName + "_" + selectedValue
+                )
+              ) {
+                alert("You have already picked this criteria");
+                this.value = "";
+              } else {
+                existingValue[productName + "_" + initialSelectIndex] =
+                  productName + "_" + selectedValue;
+
+                const elems = document.querySelector(
+                  `.dependentSelect[data-col-index="${initialSelectIndex}"][data-row-index="${rowIndex}"]`
+                );
+                if (elems) elems.remove();
+
+                const productRow = Array.from(
+                  document.querySelectorAll("#rankingTable tbody tr")
+                ).find(
+                  (row) => row.cells[0].textContent.trim() === productName
+                );
+
+                const headerCells = document.querySelectorAll(
+                  "#rankingTable thead th"
+                );
+                const tdIndex = Array.from(headerCells).findIndex(
+                  (th) => th.textContent.trim() === selectedValue
+                );
+
+                if (tdIndex !== -1) {
+                  const targetCell = productRow.cells[tdIndex];
+                  if (!targetCell.hasChildNodes()) {
+                    const ratingSelect = document.createElement("select");
+                    ratingSelect.name = `ranking_${selectedValue.replace(
+                      /\W+/g,
+                      "_"
+                    )}|${productName.replace(/\W+/g, "_")}`;
+                    ratingSelect.className = "dependentSelect";
+                    ratingSelect.setAttribute(
+                      "data-col-index",
+                      initialSelectIndex
+                    );
+                    ratingSelect.setAttribute("data-row-index", rowIndex);
+                    ratingSelect.required = true;
+                    for (let i = 0; i <= 5; i++) {
+                      const option = document.createElement("option");
+                      if (i === 0) {
+                        option.value = "";
+                        option.textContent = "Select";
+                      } else {
+                        option.value = i;
+                        option.textContent = i;
+                      }
+                      ratingSelect.appendChild(option);
+                    }
+                    targetCell.appendChild(ratingSelect);
+                  }
+                }
+              }
+            });
+
+            td.appendChild(select);
+            row.appendChild(td);
+          });
+
+          criteriaTbody.appendChild(row);
+        }
+      });
+
+      // Update ranking table header
+      const rankingThead = document.querySelector("#rankingTable thead tr");
+      rankingThead.innerHTML = "<th>Product</th>";
+      criteriaList.forEach((crit) => {
+        if (crit !== "Other" || otherCriteria) {
+          const th = document.createElement("th");
+          th.textContent = crit === "Other" ? otherCriteria || "Other" : crit;
+          rankingThead.appendChild(th);
+        }
+      });
+
+      // Remove non-existent product rows from ranking table
+      const rankingTbody = document.querySelector("#rankingTable tbody");
+      Array.from(rankingTbody.rows).forEach((row) => {
+        const productName = row.cells[0].textContent.trim();
+        if (!products.some((p) => p.name === productName)) {
+          row.remove();
+        }
+      });
+
+      // Add new product rows to ranking table
+      const existingRankingProducts = Array.from(rankingTbody.rows).map(
+        (row) => row.cells[0].textContent.trim()
+      );
+
+      products.forEach((product) => {
+        if (!existingRankingProducts.includes(product.name)) {
+          const row = document.createElement("tr");
+          const productTd = document.createElement("td");
+          productTd.textContent = product.name;
+          row.appendChild(productTd);
+
+          // Initialize empty td for each header
+          for (let i = 1; i < rankingThead.children.length; i++) {
+            const td = document.createElement("td");
+            row.appendChild(td);
+          }
+          rankingTbody.appendChild(row);
+        }
+      });
+
+      // Ensure row cell count matches headers
+      const headerCount = rankingThead.children.length; // Including Product column
+      Array.from(rankingTbody.rows).forEach((row) => {
+        const missingCells = headerCount - row.cells.length;
+        for (let i = 0; i < missingCells; i++) {
+          const td = document.createElement("td");
+          td.textContent = "";
+          row.appendChild(td);
+        }
+      });
+
+      // Update existing select options (to reflect Other changes)
+      Array.from(
+        criteriaTbody.querySelectorAll("select.criteria-select")
+      ).forEach((select) => {
+        const selectedValue = select.value; // Preserve selected value
+        select.innerHTML = ""; // Clear and rebuild
+
+        const defaultOption = document.createElement("option");
+        defaultOption.value = "";
+        defaultOption.textContent = "Select";
+        select.appendChild(defaultOption);
+
+        criteriaList.forEach((c) => {
+          if (c !== "Other" || otherCriteria) {
+            const option = document.createElement("option");
+            option.value = c === "Other" ? otherCriteria || "Other" : c;
+            option.textContent = option.value;
+            select.appendChild(option);
+          }
+        });
+
+        // Restore previous selection if still valid
+        if (
+          selectedValue &&
+          Array.from(select.options).some(
+            (opt) => opt.value === selectedValue
+          )
+        ) {
+          select.value = selectedValue;
+        } else {
+          select.value = ""; // Clear if no longer valid
+        }
+      });
+    }
+
+    function updateRankingTable() {
+      const rankingThead = document.querySelector("#rankingTable thead tr");
+      rankingThead.innerHTML = "<th>Product</th>";
+
+      const otherRanking = getOtherValue("other_criteria");
+      criteriaList.forEach((crit) => {
+        if (crit !== "Other" || otherRanking) {
+          const th = document.createElement("th");
+          th.textContent = crit === "Other" ? otherRanking || "Other" : crit;
+          rankingThead.appendChild(th);
+        }
+      });
+
+      const rankingTbody = document.querySelector("#rankingTable tbody");
+
+      // Remove non-existent products
+      Array.from(rankingTbody.rows).forEach((row) => {
+        const productName = row.cells[0].textContent.trim();
+        if (!products.some((p) => p.name === productName)) {
+          row.remove();
+        }
+      });
+
+      // Get current products
+      const existingProducts = Array.from(rankingTbody.rows).map((row) =>
+        row.cells[0].textContent.trim()
+      );
+
+      // Add new products
+      products.forEach((product) => {
+        if (!existingProducts.includes(product.name)) {
+          const row = document.createElement("tr");
+          row.innerHTML = `<td>${product.name}</td>`;
+
+          // Add empty cells for each criteria
+          criteriaList.forEach((crit) => {
+            if (crit !== "Other" || otherRanking) {
+              const td = document.createElement("td");
+              row.appendChild(td);
+            }
+          });
+
+          rankingTbody.appendChild(row);
+        }
+      });
+
+      // Ensure cell count matches headers
+      const headerCount = rankingThead.children.length;
+      Array.from(rankingTbody.rows).forEach((row) => {
+        const currentCells = row.cells.length;
+        if (currentCells < headerCount) {
+          for (let i = currentCells; i < headerCount; i++) {
+            const td = document.createElement("td");
+            row.appendChild(td);
+          }
+        } else if (currentCells > headerCount) {
+          for (let i = currentCells - 1; i >= headerCount; i--) {
+            row.deleteCell(i);
+          }
+        }
+      });
+    }
+
+    function updateLeadTimeTable() {
+      const leadTimeThead = document.querySelector("#leadTimeTable thead tr");
+      leadTimeThead.innerHTML = "<th>Product</th>";
+      const otherLeadTime = getOtherValue("other_lead_time");
+
+      const topicsDisplayed = [];
+      leadTimeList.forEach((lt) => {
+        if (lt !== "More than 10 weeks" || otherLeadTime) {
+          const label =
+            lt === "More than 10 weeks" ? otherLeadTime || lt : lt;
+          const key = label.replace(/\W+/g, "_");
+          topicsDisplayed.push({ label, key });
+          const th = document.createElement("th");
+          th.textContent = label;
+          leadTimeThead.appendChild(th);
+        }
+      });
+
+      const leadTimeTbody = document.querySelector("#leadTimeTable tbody");
+
+      // Remove non-existent product rows
+      Array.from(leadTimeTbody.rows).forEach((row) => {
+        const productName = row.cells[0].textContent.trim();
+        if (!products.some((p) => p.name === productName)) {
+          row.remove();
+        }
+      });
+
+      // Current products in tbody
+      const existingProducts = Array.from(leadTimeTbody.rows).map((row) =>
+        row.cells[0].textContent.trim()
+      );
+
+      // Add new product rows
+      products.forEach((product) => {
+        if (!existingProducts.includes(product.name)) {
+          const row = document.createElement("tr");
+          const productTd = document.createElement("td");
+          productTd.textContent = product.name;
+          row.appendChild(productTd);
+
+          topicsDisplayed.forEach((topic) => {
+            const td = document.createElement("td");
+            const input = document.createElement("input");
+            input.type = "radio";
+            input.name = `lead_time|${product.name}`;
+            input.value = topic.key;
+            td.appendChild(input);
+            row.appendChild(td);
+          });
+
+          leadTimeTbody.appendChild(row);
+        }
+      });
+
+      // Correct existing rows' cells
+      Array.from(leadTimeTbody.rows).forEach((row) => {
+        const productName = row.cells[0].textContent.trim();
+
+        // Remove extra columns
+        while (row.cells.length > topicsDisplayed.length + 1) {
+          row.deleteCell(row.cells.length - 1);
+        }
+
+        for (let i = 0; i < topicsDisplayed.length; i++) {
+          const topic = topicsDisplayed[i];
+          let td = row.cells[i + 1];
+          if (!td) {
+            td = document.createElement("td");
+            row.appendChild(td);
+          }
+
+          let input = td.querySelector("input[type='radio']");
+          if (input) {
+            const checked = input.checked;
+            input.name = `lead_time|${productName}`;
+            input.value = topic.key;
+            input.checked = checked;
+          } else {
+            td.innerHTML = "";
+            input = document.createElement("input");
+            input.type = "radio";
+            input.name = `lead_time|${productName}`;
+            input.value = topic.key;
+            td.appendChild(input);
+          }
+        }
+      });
+    }
+
+    // Attach input listeners for claimsTable
+    function attachClaimsInputListeners() {
+      const claimsInputs = document.querySelectorAll(
+        '#claimsTable input[type="number"]'
+      );
+      claimsInputs.forEach((input) => {
+        input.removeEventListener("input", handleClaimsInputChange);
+        input.addEventListener("input", handleClaimsInputChange);
+      });
+    }
+
+    function handleClaimsInputChange() {
+      updateClaimsManagementTable();
+    }
+
+    function updateClaimsTable() {
+      const claimsThead = document.querySelector("#claimsTable thead tr");
+      claimsThead.innerHTML = "<th>Product</th>";
+      const otherClaims = getOtherValue("other_claims");
+
+      const topicsDisplayed = [];
+      claimsTopics.forEach((topic) => {
+        if (topic !== "Other" || otherClaims) {
+          const label = topic === "Other" ? otherClaims || "Other" : topic;
+          const key = label.replace(/\W+/g, "_");
+          topicsDisplayed.push({ label, key });
+          const th = document.createElement("th");
+          th.textContent = label;
+          claimsThead.appendChild(th);
+        }
+      });
+
+      const claimsTbody = document.querySelector("#claimsTable tbody");
+
+      // Remove non-existent product rows
+      Array.from(claimsTbody.rows).forEach((row) => {
+        const productName = row.cells[0].textContent.trim();
+        if (!products.some((p) => p.name === productName)) row.remove();
+      });
+
+      const existingProducts = Array.from(claimsTbody.rows).map((row) =>
+        row.cells[0].textContent.trim()
+      );
+
+      products.forEach((product) => {
+        if (!existingProducts.includes(product.name)) {
+          const row = document.createElement("tr");
+          const productTd = document.createElement("td");
+          productTd.textContent = product.name;
+          row.appendChild(productTd);
+
+          topicsDisplayed.forEach((topic) => {
+            const td = document.createElement("td");
+            const input = document.createElement("input");
+            input.type = "number";
+            input.name = `claims_${topic.key}|${product.name}`;
+            input.min = 0;
+            input.placeholder = "Free text";
+            td.appendChild(input);
+            row.appendChild(td);
+          });
+
+          claimsTbody.appendChild(row);
+        }
+      });
+
+      // Ensure correct columns for existing rows
+      Array.from(claimsTbody.rows).forEach((row) => {
+        const productName = row.cells[0].textContent.trim();
+
+        while (row.cells.length > topicsDisplayed.length + 1) {
+          row.deleteCell(row.cells.length - 1);
+        }
+
+        for (let i = 0; i < topicsDisplayed.length; i++) {
+          const topic = topicsDisplayed[i];
+          const expectedName = `claims_${topic.key}|${productName}`;
+          let td = row.cells[i + 1];
+          if (!td) {
+            td = document.createElement("td");
+            row.appendChild(td);
+          }
+
+          let input = td.querySelector("input");
+          if (input) {
+            const val = input.value;
+            input.type = "number";
+            input.name = expectedName;
+            input.min = 0;
+            input.placeholder = "Free text";
+            input.required = true;
+            input.value = val;
+          } else {
+            const prevText = td.textContent.trim();
+            td.innerHTML = "";
+            input = document.createElement("input");
+            input.type = "number";
+            input.name = expectedName;
+            input.min = 0;
+            input.placeholder = "Free text";
+            input.required = true;
+            if (prevText !== "") {
+              const num = parseFloat(prevText);
+              if (!Number.isNaN(num)) input.value = num;
+            }
+            td.appendChild(input);
+          }
+        }
+      });
+
+      attachClaimsInputListeners();
+      updateClaimsManagementTable();
+    }
+
+    function updateClaimsManagementTable() {
+      const claimsMgtThead = document.querySelector(
+        "#claimsManagementTable thead tr"
+      );
+      claimsMgtThead.innerHTML = "<th>Product</th>";
+      const otherClaimsMgt = getOtherValue("other_claims");
+
+      const topicsDisplayed = [];
+      claimsTopics.forEach((topic) => {
+        if (topic !== "Other" || otherClaimsMgt) {
+          const label = topic === "Other" ? otherClaimsMgt || "Other" : topic;
+          const key = label.replace(/\W+/g, "_");
+          topicsDisplayed.push({ label, key });
+          const th = document.createElement("th");
+          th.textContent = label;
+          claimsMgtThead.appendChild(th);
+        }
+      });
+
+      const claimsMgtTbody = document.querySelector(
+        "#claimsManagementTable tbody"
+      );
+
+      // Remove non-existent product rows
+      Array.from(claimsMgtTbody.rows).forEach((row) => {
+        const productName = row.cells[0].textContent.trim();
+        if (!products.some((p) => p.name === productName)) row.remove();
+      });
+
+      // Current products
+      const existingProducts = Array.from(claimsMgtTbody.rows).map((row) =>
+        row.cells[0].textContent.trim()
+      );
+
+      // Add new product rows
+      products.forEach((product) => {
+        if (!existingProducts.includes(product.name)) {
+          const row = document.createElement("tr");
+          const productTd = document.createElement("td");
+          productTd.textContent = product.name;
+          row.appendChild(productTd);
+
+          topicsDisplayed.forEach((topic) => {
+            const td = document.createElement("td");
+            const claimsInput = document.querySelector(
+              `#claimsTable input[name="claims_${topic.key}|${product.name}"]`
+            );
+            const claimsValue = claimsInput
+              ? parseFloat(claimsInput.value)
+              : 0;
+
+            if (claimsValue > 0) {
+              const select = createClaimsSelect(
+                `claims_mgt_${topic.key}|${product.name}`
+              );
+              td.appendChild(select);
+            }
+            row.appendChild(td);
+          });
+
+          claimsMgtTbody.appendChild(row);
+        }
+      });
+
+      // Correct existing rows
+      Array.from(claimsMgtTbody.rows).forEach((row) => {
+        const productName = row.cells[0].textContent.trim();
+
+        while (row.cells.length > topicsDisplayed.length + 1) {
+          row.deleteCell(row.cells.length - 1);
+        }
+
+        for (let i = 0; i < topicsDisplayed.length; i++) {
+          const topic = topicsDisplayed[i];
+          const expectedName = `claims_mgt_${topic.key}|${productName}`;
+          let td = row.cells[i + 1];
+          if (!td) {
+            td = document.createElement("td");
+            row.appendChild(td);
+          }
+
+          const claimsInput = document.querySelector(
+            `#claimsTable input[name="claims_${topic.key}|${productName}"]`
+          );
+          const claimsValue = claimsInput ? parseFloat(claimsInput.value) : 0;
+
+          if (claimsValue > 0) {
+            let select = td.querySelector("select");
+            if (select) {
+              const val = select.value;
+              select.name = expectedName;
+              select.required = true;
+              select.value = val;
+            } else {
+              td.innerHTML = "";
+              const newSelect = createClaimsSelect(expectedName);
+              td.appendChild(newSelect);
+            }
+          } else {
+            td.innerHTML = "";
+          }
+        }
+      });
+    }
+
+    function createClaimsSelect(name) {
+      const select = document.createElement("select");
+      select.name = name;
+      select.required = true;
+
+      const defaultOption = document.createElement("option");
+      defaultOption.value = "";
+      defaultOption.textContent = "Select";
+      select.appendChild(defaultOption);
+
+      for (let v = 1; v <= 5; v++) {
+        const opt = document.createElement("option");
+        opt.value = v;
+        opt.textContent = v;
+        select.appendChild(opt);
+      }
+      return select;
+    }
+
+    function updateTrendsTable() {
+      const trendsTbody = document.querySelector("#trendsTable tbody");
+
+      const existingRows = Array.from(trendsTbody.querySelectorAll("tr"));
+      const existingProducts = existingRows.map((row) =>
+        row.cells[0].textContent.trim()
+      );
+
+      existingRows.forEach((row) => {
+        const productName = row.cells[0].textContent.trim();
+        if (!products.some((p) => p.name === productName)) {
+          row.remove();
+        }
+      });
+
+      products.forEach((product) => {
+        if (!existingProducts.includes(product.name)) {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+              <td>${product.name}</td>
+              <td><textarea name="trends|${product.name}" rows="2" placeholder="Free text" required></textarea></td>
+            `;
+          trendsTbody.appendChild(row);
+        }
+      });
+    }
+
+    function updateGrowthTable() {
+      const growthTbody = document.querySelector("#growthTable tbody");
+
+      const existingRows = Array.from(growthTbody.querySelectorAll("tr"));
+      const existingProducts = existingRows.map((row) =>
+        row.cells[0].textContent.trim()
+      );
+
+      existingRows.forEach((row) => {
+        const productName = row.cells[0].textContent.trim();
+        if (!products.some((p) => p.name === productName)) {
+          row.remove();
+        }
+      });
+
+      products.forEach((product) => {
+        if (!existingProducts.includes(product.name)) {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+              <td>${product.name}</td>
+              <td><input class="percentageInput" type="text" name="growth|${product.name}" placeholder="%" required></td>
+            `;
+          row.querySelectorAll(".percentageInput").forEach(initPercentageInput);
+          growthTbody.appendChild(row);
+        }
+      });
+    }
+
+    document
+      .querySelector("#productsTable")
+      .addEventListener("input", updateDynamicTables);
+    document
+      .getElementById("other_criteria")
+      .addEventListener("input", updateCriteriaTable);
+    document
+      .getElementById("other_lead_time")
+      .addEventListener("input", updateLeadTimeTable);
+    document
+      .getElementById("other_claims")
+      .addEventListener("input", updateClaimsTable);
+    document
+      .querySelector("#surveyForm")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const data = {};
+        for (let [key, value] of formData.entries()) {
+          if (data[key]) {
+            if (!Array.isArray(data[key])) {
+              data[key] = [data[key]];
+            }
+            data[key].push(value);
+          } else {
+            data[key] = value;
+          }
+        }
+
+        function generateCustomerKey() {
+          return Math.floor(Math.random() * 1e10)
+            .toString()
+            .padStart(10, "0");
+        }
+
+        function normalizeName(name) {
+          return name
+            .trim()
+            .replace(/[^a-zA-Z0-9]+/g, "_")
+            .replace(/^_+|_+$/g, "");
+        }
+
+        const validRanking = [
+          "ranking_Short_delivery_lead_time",
+          "ranking_Low_cost",
+          "ranking_High_product_performance",
+          "ranking_High_product_availability",
+          "ranking_High_delivery_performance",
+          "ranking_End_to_end_visibility_of_order_fulfilment",
+          "ranking_Proactive_and_constant_communication",
+          "ranking_Responsive_customer_support",
+          "ranking_Quick_adaptability_to_customer_s_changes",
+        ].map(normalizeName);
+
+        const customerKey = generateCustomerKey();
+
+        const generalFields = {};
+        for (let key in data) {
+          if (
+            !key.includes("|") &&
+            key !== "product_name" &&
+            key !== "product_percentage" &&
+            key !== "product_family" &&
+            !key.startsWith("other") &&
+            !key.startsWith("claims") &&
+            !key.startsWith("ranking")
+          ) {
+            generalFields[normalizeName(key)] = data[key];
+          }
+        }
+        generalFields.customerKey = customerKey;
+
+        const productFields = data.product_name.map((productName, index) => {
+          const fields = {};
+          const normProductName = normalizeName(productName);
+
+          fields.customer = data.customer;
+          fields.customerKey = customerKey;
+          fields.Product = productName;
+          fields.product_percentage = data.product_percentage[index];
+          fields.product_family = data.product_family[index];
+
+          let claimCount = 0;
+          let claimMgtCount = 0;
+          let hasRanking = false;
+
+          for (let key in data) {
+            if (key.includes("|")) {
+              let [field, pName] = key.split("|");
+              let normPName = normalizeName(pName);
+              if (normPName === normProductName) {
+                let normField = normalizeName(field);
+
+                if (normField.startsWith("ranking_")) {
+                  hasRanking = true;
+                  if (!validRanking.includes(normField)) {
+                    normField = "ranking_other_criteria";
+                  }
+                }
+
+                if (normField.startsWith("claims_mgt")) {
+                  claimMgtCount++;
+                  if (claimMgtCount >= 5) {
+                    normField = "claims_mgt_other";
+                  }
+                } else if (normField.startsWith("claims_")) {
+                  claimCount++;
+                  if (claimCount >= 5) {
+                    normField = "claims_other";
+                  }
+                }
+
+                fields[normField] = data[key];
+              }
+            }
+
+            if (key.startsWith("other")) {
+              fields[normalizeName(key)] = data[key];
+            }
+          }
+
+          if (!hasRanking) {
+            fields["ranking_other_criteria"] = "";
+          }
+
+          return fields;
+        });
+
+        const output1 = { records: [{ fields: generalFields }] };
+        const output2 = {
+          records: productFields.map((f) => ({ fields: f })),
+        };
+
+        async function createRecords(recordsToAirtable, tableName) {
+          const url = `https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(
+            tableName
+          )}`;
+
+          try {
+            const response = await fetch(url, {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(recordsToAirtable),
+            });
+
+            if (!response.ok) {
+              throw new Error(
+                `Error ${response.status}: ${await response.text()}`
+              );
+            }
+
+            const data = await response.json();
+            console.log(
+              `✅ Records created successfully in table ${tableName}:`
+            );
+            console.log(JSON.stringify(data, null, 2));
+            return true;
+          } catch (error) {
+            console.error(
+              `❌ Error creating records in table ${tableName}:`,
+              error.message
+            );
+            return false;
+          }
+        }
+
+        Promise.all([
+          createRecords(output1, "General fields"),
+          createRecords(output2, "Product fields"),
+        ]).then((results) => {
+          if (results.every((result) => result === true)) {
+            document.getElementById("customerKey").textContent = customerKey;
+            document.getElementById("messageModal").style.display = "flex";
+          }
+
+          document
+            .getElementById("closeModal")
+            .addEventListener("click", () => {
+              document.getElementById("messageModal").style.display = "none";
+              document.getElementById("surveyForm").reset();
+              customerProducts = []; // Reset customer products
+              updateProductsTable(); // Reset products table
+              updateDynamicTables(); // Reset other tables
+            });
+        });
+      });
+  </script>
+</body>
+
+</html>
