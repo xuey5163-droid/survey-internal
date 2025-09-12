@@ -2168,8 +2168,10 @@
           }
         }
         generalFields.customerKey = customerKey;
-
-        const productFields = data.product_name.map((productName, index) => {
+        const productNames = Array.isArray(data.product_name)
+            ? data.product_name
+            : [data.product_name];
+        const productFields = productNames.map((productName, index) => {
           const fields = {};
           const normProductName = normalizeName(productName);
 
@@ -2290,5 +2292,6 @@
 </body>
 
 </html>
+
 
 
