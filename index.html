@@ -1157,7 +1157,7 @@
         // const filter = `FIND("${encodeURIComponent(
         //   customerName
         // )}", {customer_name})`;
-        const filter = `FIND("${customerName}", {customer_name})`;
+        const filter = `{customer_name} = "${customerName}"`;
         const records = await fetchAllRecords(
           BASE_ID,
           COMA_TABLE_NAME,
@@ -2292,6 +2292,7 @@
 </body>
 
 </html>
+
 
 
 
