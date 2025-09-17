@@ -148,7 +148,6 @@
       background-color: white;
     }
 
-
     #criteriaTable th,
     #rankingTable th {
       font-size: 12px;
@@ -420,9 +419,7 @@
 
 <body>
   <div id="loadingOverlay">
-    <div class="loading-box">
-      🔄 Data is loading, just a moment …
-    </div>
+    <div class="loading-box">🔄 Data is loading, just a moment …</div>
   </div>
   <form id="surveyForm">
     <div class="imagecontainer">
@@ -991,8 +988,6 @@
   </div>
 
   <script>
-
-
     function initPercentageInput(input) {
       if (!input) return;
       input.dataset.rawValue = parseFloat(input.value) / 100 || 0;
@@ -1030,14 +1025,17 @@
         input.dataset.rawValue = num;
         input.value = (num * 100).toFixed(2) + "%";
       });
-      observer.observe(input, { attributes: true, attributeFilter: ["value"] });
+      observer.observe(input, {
+        attributes: true,
+        attributeFilter: ["value"],
+      });
     }
 
     const AIRTABLE_API_KEY =
       "patrjtULk7D6YYpsd.540b46cea31b993558c6a81c9683c59fd9346af67ed8f2b248adbfa21113bed7";
-    const BASE_ID = "app3igG0vKL8DpLB8";
-    const TABLE_NAME = "tbl4fSGdosjDLsgaB";
-    const table_product_name = "tblbw322xWTPahpM1";
+    const BASE_ID = "app4pDj3e6lqf1GUW";
+    const TABLE_NAME = "tblnt9ZdBmBquZgdy";
+    const table_product_name = "tblHsCkBF8t773PbF";
     const COMA_TABLE_NAME = "COMA";
     let customerOptions = [];
     let productOptions = [];
@@ -1147,8 +1145,9 @@
         loadingOverlay.style.display = "none";
       }
 
-      document.querySelectorAll(".percentageInput").forEach(initPercentageInput);
-
+      document
+        .querySelectorAll(".percentageInput")
+        .forEach(initPercentageInput);
     });
 
     // Fetch products for a specific customer from COMA table
@@ -1223,7 +1222,9 @@
               <td><button type="button" class="delete-btn" onclick="deleteProductRow(this)" ${index === 0 && customerProducts.length === 1 ? "disabled" : ""
             }>Delete</button></td>
             `;
-          row.querySelectorAll(".percentageInput").forEach(initPercentageInput);
+          row
+            .querySelectorAll(".percentageInput")
+            .forEach(initPercentageInput);
           tbody.appendChild(row);
           // Initialize dropdown for the row
           const input = row.querySelector(".product-input");
@@ -1424,7 +1425,9 @@
               <td><input class="percentageInput" type="text" name="source_local|${product.name}" min="0" max="100" placeholder="%" required></td>
               <td><input class="percentageInput" type="text" name="source_asia|${product.name}" min="0" max="100" placeholder="%" required></td>
             `;
-          row.querySelectorAll(".percentageInput").forEach(initPercentageInput);
+          row
+            .querySelectorAll(".percentageInput")
+            .forEach(initPercentageInput);
           sourceTbody.appendChild(row);
         }
       });
@@ -1894,7 +1897,7 @@
             input.name = expectedName;
             input.min = 0;
             input.placeholder = "Free text";
-            //input.required = true;
+            // input.required = true;
             input.value = val;
           } else {
             const prevText = td.textContent.trim();
@@ -1904,7 +1907,7 @@
             input.name = expectedName;
             input.min = 0;
             input.placeholder = "Free text";
-            //input.required = true;
+            // input.required = true;
             if (prevText !== "") {
               const num = parseFloat(prevText);
               if (!Number.isNaN(num)) input.value = num;
@@ -2091,7 +2094,9 @@
               <td>${product.name}</td>
               <td><input class="percentageInput" type="text" name="growth|${product.name}" placeholder="%" required></td>
             `;
-          row.querySelectorAll(".percentageInput").forEach(initPercentageInput);
+          row
+            .querySelectorAll(".percentageInput")
+            .forEach(initPercentageInput);
           growthTbody.appendChild(row);
         }
       });
@@ -2169,8 +2174,9 @@
         }
         generalFields.customerKey = customerKey;
         const productNames = Array.isArray(data.product_name)
-            ? data.product_name
-            : [data.product_name];
+          ? data.product_name
+          : [data.product_name];
+
         const productFields = productNames.map((productName, index) => {
           const fields = {};
           const normProductName = normalizeName(productName);
@@ -2292,9 +2298,3 @@
 </body>
 
 </html>
-
-
-
-
-
-
