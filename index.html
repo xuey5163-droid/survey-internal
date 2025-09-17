@@ -997,7 +997,7 @@
         let selEnd = input.selectionEnd;
 
         // 只保留数字和小数点
-        let cleaned = input.value.replace(/[^\d.]/g, "");
+        let cleaned = input.value.replace(/[^\d.-]/g, "");
         let num = parseFloat(cleaned) / 100;
         if (isNaN(num)) num = 0;
         if (num > 1) num = 1;
@@ -2298,4 +2298,5 @@
 </body>
 
 </html>
+
 
