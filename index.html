@@ -997,11 +997,11 @@
         let selEnd = input.selectionEnd;
 
         // 只保留数字和小数点
-        let cleaned = input.value.replace(/[^\d.-]/g, "");
+        let cleaned = input.value.replace(/[^\d.]/g, "");
         let num = parseFloat(cleaned) / 100;
         if (isNaN(num)) num = 0;
         if (num > 1) num = 1;
-        if (num < -1) num = -1;
+        if (num < 0) num = 0;
         input.dataset.rawValue = num;
 
         input.value = cleaned;
@@ -2239,41 +2239,36 @@
         };
 
         async function createRecords(recordsToAirtable, tableName) {
-          const url = `https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(
-            tableName
-          )}`;
+          const url = `https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(tableName)}`;
+          const batchSize = 10;
+          const records = recordsToAirtable.records;
 
-          try {
-            const response = await fetch(url, {
-              method: "POST",
-              headers: {
-                Authorization: `Bearer ${AIRTABLE_API_KEY}`,
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(recordsToAirtable),
-            });
+          for (let i = 0; i < records.length; i += batchSize) {
+            const batch = { records: records.slice(i, i + batchSize) };
 
-            if (!response.ok) {
-              throw new Error(
-                `Error ${response.status}: ${await response.text()}`
-              );
+            try {
+              const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(batch),
+              });
+
+              if (!response.ok) {
+                throw new Error(`Error ${response.status}: ${await response.text()}`);
+              }
+
+              const data = await response.json();
+              console.log(`✅ Batch created in table ${tableName}:`, data);
+            } catch (error) {
+              console.error(`❌ Error creating records in table ${tableName}:`, error.message);
+              return false;
             }
-
-            const data = await response.json();
-            console.log(
-              `✅ Records created successfully in table ${tableName}:`
-            );
-            console.log(JSON.stringify(data, null, 2));
-            return true;
-          } catch (error) {
-            console.error(
-              `❌ Error creating records in table ${tableName}:`,
-              error.message
-            );
-            return false;
           }
+          return true;
         }
-
         Promise.all([
           createRecords(output1, "General fields"),
           createRecords(output2, "Product fields"),
@@ -2298,5 +2293,3 @@
 </body>
 
 </html>
-
-
