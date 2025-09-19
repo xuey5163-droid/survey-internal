@@ -2181,58 +2181,66 @@
         const productFields = productNames.map((productName, index) => {
           const fields = {};
           const normProductName = normalizeName(productName);
+          const otherClaimRaw = data["other_claim_name"];
+          const otherClaimNorm = otherClaimRaw ? normalizeName(otherClaimRaw) : null;
 
+          // 基本字段
           fields.customer = data.customer;
           fields.customerKey = customerKey;
           fields.Product = productName;
-          fields.product_percentage = data.product_percentage[index];
-          fields.product_family = data.product_family[index];
+          fields.product_percentage = Array.isArray(data.product_percentage) ? data.product_percentage[index] : data.product_percentage;
+          fields.product_family = Array.isArray(data.product_family) ? data.product_family[index] : data.product_family;
 
-          let claimCount = 0;
-          let claimMgtCount = 0;
           let hasRanking = false;
 
           for (let key in data) {
+            // 只处理属于当前 product 的键（含分隔符 "|"）
             if (key.includes("|")) {
               let [field, pName] = key.split("|");
               let normPName = normalizeName(pName);
-              if (normPName === normProductName) {
-                let normField = normalizeName(field);
+              if (normPName !== normProductName) continue;
 
-                if (normField.startsWith("ranking_")) {
-                  hasRanking = true;
-                  if (!validRanking.includes(normField)) {
-                    normField = "ranking_other_criteria";
-                  }
-                }
+              let normField = normalizeName(field);
 
-                if (normField.startsWith("claims_mgt")) {
-                  claimMgtCount++;
-                  if (claimMgtCount >= 5) {
-                    normField = "claims_mgt_other";
-                  }
-                } else if (normField.startsWith("claims_")) {
-                  claimCount++;
-                  if (claimCount >= 5) {
-                    normField = "claims_other";
-                  }
-                }
-
+              // Ranking 保持原有逻辑
+              if (normField.startsWith("ranking_")) {
+                hasRanking = true;
+                if (!validRanking.includes(normField)) normField = "ranking_other_criteria";
                 fields[normField] = data[key];
+                continue;
               }
+
+              // Claims / Claims_mgt：若 suffix 等于 other_claim_name（归一化），映射到 ..._other
+              if (normField.startsWith("claims_mgt") || normField.startsWith("claims_")) {
+                const isMgt = normField.startsWith("claims_mgt");
+                const suffix = isMgt ? normField.replace(/^claims_mgt_/, "") : normField.replace(/^claims_/, "");
+
+                if (otherClaimNorm && suffix === otherClaimNorm) {
+                  // 把与 other_claim_name 对应的 claims 映射到 *_other（保留 select/text 的值）
+                  const target = isMgt ? "claims_mgt_other" : "claims_other";
+                  fields[target] = data[key];
+                } else {
+                  // 普通映射
+                  fields[normField] = data[key];
+                }
+                continue;
+              }
+
+              // 其他以 product 关联的字段按原名存储
+              fields[normField] = data[key];
             }
 
+            // 非 product-specific 的 other_* 字段（包括 other_claim_name），全部保留
             if (key.startsWith("other")) {
               fields[normalizeName(key)] = data[key];
             }
           }
 
-          if (!hasRanking) {
-            fields["ranking_other_criteria"] = "";
-          }
+          if (!hasRanking) fields["ranking_other_criteria"] = "";
 
           return fields;
         });
+
 
         const output1 = { records: [{ fields: generalFields }] };
         const output2 = {
@@ -2243,7 +2251,7 @@
           const url = `https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(tableName)}`;
           const batchSize = 10;
           const records = recordsToAirtable.records;
-
+          console.log(recordsToAirtable);
           for (let i = 0; i < records.length; i += batchSize) {
             const batch = { records: records.slice(i, i + batchSize) };
 
@@ -2258,18 +2266,26 @@
               });
 
               if (!response.ok) {
-                throw new Error(`Error ${response.status}: ${await response.text()}`);
+                const errorText = await response.text();
+                throw new Error(`Error ${response.status}: ${errorText}`);
               }
 
               const data = await response.json();
               console.log(`✅ Batch created in table ${tableName}:`, data);
             } catch (error) {
               console.error(`❌ Error creating records in table ${tableName}:`, error.message);
+
+              // Alert in English
+              alert(
+                `❌ Data submission failed!\n\nError details: ${error.message}\n\nPlease take a screenshot of this message and send it to: yong.xue@b2g-consulting.com`
+              );
+
               return false;
             }
           }
           return true;
         }
+
         Promise.all([
           createRecords(output1, "General fields"),
           createRecords(output2, "Product fields"),
@@ -2277,6 +2293,11 @@
           if (results.every((result) => result === true)) {
             document.getElementById("customerKey").textContent = customerKey;
             document.getElementById("messageModal").style.display = "flex";
+          } else {
+            // Fallback alert if some records failed
+            alert(
+              `⚠️ Some data could not be submitted.\n\nPlease take a screenshot of this message and send it to: yong.xue@b2g-consulting.com`
+            );
           }
 
           document
@@ -2289,6 +2310,7 @@
               updateDynamicTables(); // Reset other tables
             });
         });
+
       });
   </script>
 </body>
