@@ -1758,12 +1758,13 @@
           productTd.textContent = product.name;
           row.appendChild(productTd);
 
-          topicsDisplayed.forEach((topic) => {
+          topicsDisplayed.forEach((topic, index) => {
             const td = document.createElement("td");
             const input = document.createElement("input");
             input.type = "radio";
             input.name = `lead_time|${product.name}`;
             input.value = topic.key;
+            if (index === 0) input.required = true; // 只给第一个添加 required
             td.appendChild(input);
             row.appendChild(td);
           });
